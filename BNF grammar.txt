@@ -1,0 +1,33 @@
+sentence : np vp np sentence_tail;
+
+sentence_tail : conj sentence | eos;
+
+np : art adj_list noun pp | noun;
+
+adj_list : adj adj_tail | e ;
+
+adj_tail : comma adj_list | e ;
+
+pp : prep np | e ;
+
+vp : adv verb | verb;
+
+// *** terminals ***
+
+comma : ',';
+
+eos : '.' | '!';
+
+adj : 'fast' | 'slow' | 'furry' | 'yellow' ;
+
+adv : 'quickly' | 'slowly' | 'quietly';
+
+art : 'a' | 'the';
+
+conj : 'and' | 'or';
+
+noun : 'dog' | 'cat' | 'mouse' | 'tree' | 'cheese' ;
+
+prep : 'of' | 'around';
+
+verb : 'likes' | 'hates' | 'eats' | 'chases';
