@@ -1,10 +1,7 @@
-; COURSE: COSC455101
-; SUBMITTER: jalexa14
-; NAMES: Joshua Alexander, Will McHarg
-; Programming Assignment 2
-; Prints output and saves .gv file at the filePath varibale below. The file is overwritten after each run if it already exisits
+; NAME: Joshua Alexander
+; Prints output and saves .gv file at the filePath variable below. The file is overwritten after each run if it already exisits.
 
-#lang racket
+(#%require racket)
 
 (define sCtr 2)
 (define tCtr (+ sCtr 1))
@@ -163,57 +160,57 @@
 
 ; Non-Terminal Grammar Functions
 (define (sentence_tail)
-  (cond [(isConjunction (first s))
+  (cond ((isConjunction (first s)) (begin
          (set! sCtr (+ sCtr tCtr))
          (set! lvl sCtr)
          (conjunction (first s))
          (set! tCtr (+ tCtr 1))
-         (sentence)]
-        [else (eos (first s))]))
+         (sentence)))
+        (else (eos (first s)))))
 
 (define (adj_list)
-  (cond [(isAdjective (first s))
-         (cond [(isComma (second s))
+  (cond ((isAdjective (first s))
+         (cond ((isComma (second s)) (begin
                 (printNonTerminal "Adjective List" sCtr)
                 (set! lvl tCtr)
                 (set! tCtr (+ tCtr 1))
                 (adjective (first s))
-                (adj_tail)]
-               [else (begin (adjective (first s)) (adj_tail))])
-         (set! lvl sCtr)]
-        [else
-         (cond [(isNoun (first s)) (display "")]
-                    [else (begin (printf "Adjective expected but found \"~a\"\n" (first s)) (parse-next))])]))
+                (adj_tail)))
+               (else (begin (adjective (first s)) (adj_tail))))
+         (set! lvl sCtr))
+        (else
+         (cond ((isNoun (first s)) (display ""))
+                    (else (begin (printf "Adjective expected but found \"~a\"\n" (first s)) (parse-next)))))))
 
 (define (adj_tail)
-  (cond [(isComma (first s))
+  (cond ((isComma (first s)) (begin
          (comma (first s))
-         (adj_list)]
-        [else (display "")]))
+         (adj_list)))
+        (else (display ""))))
 
 (define (pp)
-  (cond [(isPreposition (first s))
+  (cond ((isPreposition (first s)) (begin
          (preposition (first s))
-         (np)]
-        [else (display "")]))
+         (np)))
+        (else (display ""))))
 
 (define (vp)
-  (cond [(isAdverb (first s))
+  (cond ((isAdverb (first s)) (begin
          (printNonTerminal "Verb Phrase" sCtr)
          (set! lvl tCtr)
          (set! tCtr (+ tCtr 1))
          (adverb (first s))
          (verb (first s))
-         (set! lvl sCtr)]
-        [else (verb (first s))]))
+         (set! lvl sCtr)))
+        (else (verb (first s)))))
 
 (define (np)
-  (cond [(isArticle (first s))
+  (cond ((isArticle (first s)) (begin
          (article (first s))
          (adj_list)
          (noun (first s))
-         (pp)]
-        [else (noun (first s))]))
+         (pp)))
+        (else (noun (first s)))))
 
 (define (sentence)
   (printf "\t{~a [label=\"Sentence\"]}; 1->~a;\n" sCtr sCtr)

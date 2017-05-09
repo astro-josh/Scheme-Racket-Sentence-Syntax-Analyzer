@@ -1,5 +1,5 @@
 ; NAME: Joshua Alexander
-; Prints output and saves .gv file at the filePath varibale below. The file is overwritten after each run if it already exisits.
+; Prints output and saves .gv file at the filePath variable below. The file is overwritten after each run if it already exisits.
 
 #lang racket
 
